@@ -6,6 +6,7 @@ import (
 	"net"
 	"sody.com/chat/config"
 	"sody.com/chat/mylog"
+	"sody.com/chat/myproto"
 )
 
 func StartServer() {
@@ -36,16 +37,18 @@ func handleConn(conn net.Conn) {
 	//阻塞读取
 	for {
 		r := bufio.NewReader(conn)
-		msg, err := r.ReadString('\n')
+
+		content, err := myproto.Decode(r)
 		if err == io.EOF {
-			mylog.GetLogger().Printf("conn closed\n")
-			break
-		}
-		if err != nil {
-			mylog.GetLogger().Printf("read failed, err:%v\n", err)
+			mylog.GetLogger().Println("client closed")
 			break
 		}
 
-		mylog.GetLogger().Printf("from client:%s", msg)
+		if err != nil {
+			mylog.GetLogger().Printf("decode failed, err:%v\n", err)
+			break
+		}
+
+		mylog.GetLogger().Printf("from client:%s", content)
 	}
 }

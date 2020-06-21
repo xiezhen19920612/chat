@@ -7,6 +7,7 @@ import (
 	"os"
 	"sody.com/chat/config"
 	"sody.com/chat/mylog"
+	"sody.com/chat/myproto"
 	"strings"
 )
 
@@ -36,7 +37,12 @@ func StartClient() {
 		}
 
 		//send to server
-		conn.Write([]byte(content))
+		sendBytes, err := myproto.Encode(content)
+		if err != nil {
+			mylog.GetLogger().Printf("encode failed, err:%v\n", err)
+			break
+		}
+		conn.Write(sendBytes)
 		mylog.GetLogger().Printf("send to server success, content:%s", content)
 	}
 }
