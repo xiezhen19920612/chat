@@ -1,0 +1,1 @@
+### chatroom by golang练手项目，利用golang 写一个聊天室### 模块说明- `config` 配置- `entity` 消息结构体- `main` 入口文件- `myclient` 客户端- `mylog` 日志- `myproto` 编码/解码- `myserver` 服务端- `protofile` proto 文件### 实现功能1. client 到 server 的通信2. 群播消息3. 点对点通信4. 超时踢出5. 用户登录
