@@ -1,7 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sody.com/chat/config"
+)
 
 func main() {
-	fmt.Println("server")
+	fmt.Println(config.GetEndPoint())
 }
